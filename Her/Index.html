@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dear Subika</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #fdf6f0;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        display: none;
+        padding: 40px;
+        animation: fadeIn 1.5s ease;
+      }
+      .active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      button {
+        padding: 10px 20px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: transform 0.2s;
+      }
+      button:hover {
+        transform: scale(1.05);
+      }
+      .yes {
+        background: #4caf50;
+        color: white;
+      }
+      .no {
+        background: #f44336;
+        color: white;
+      }
+      .emoji {
+        font-size: 2em;
+        margin-top: 10px;
+      }
+      .decor {
+        font-size: 1.5em;
+        color: #ff69b4;
+        margin-top: 20px;
+      }
+      ul {
+        text-align: left;
+        max-width: 600px;
+        margin: auto;
+      }
+      li {
+        margin: 20px 0;
+      }
+      #board {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-gap: 5px;
+        justify-content: center;
+        margin: 20px auto;
+      }
+      .cell {
+        width: 100px;
+        height: 100px;
+        background: #fff;
+        border: 2px solid #333;
+        font-size: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+      .cell.taken {
+        cursor: not-allowed;
+        background: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Page 1: Opening Mail -->
+    <div id="page1" class="page active">
+      <h2>📩 Message from your buddy</h2>
+      <p>Click below to open the letter...</p>
+      <button onclick="nextPage(2)">Open Letter</button>
+    </div>
+
+    <!-- Page 2: Question -->
+    <div id="page2" class="page">
+      <h2>💌 Has my presence made your life happier and lighter?</h2>
+      <button class="yes" onclick="showYes()">Yes</button>
+      <button class="no" onclick="showNo()">No</button>
+      <div id="response"></div>
+    </div>
+
+    <!-- Page 3: Favorite Things -->
+    <div id="page3" class="page">
+      <h2>🌟 Your Favorite Things I Loved Most</h2>
+      <ul>
+        <li>
+          <strong>Time:</strong> You gave me your time, and that gift alone has
+          been more precious than anything else. Every moment you chose to spend
+          with me carried a warmth that eased my worries and silenced the
+          endless cycle of overthinking that often clouded my mind. When you are
+          present, the world feels lighter, and my heart feels calmer, as if all
+          the chaos around me suddenly pauses. Your time is not just minutes or
+          hours—it is the comfort of knowing I matter to you, the reassurance
+          that I am not alone, and the joy of sharing laughter, conversations,
+          and even silence together. Each second you dedicate to me becomes a
+          memory I treasure, a gentle reminder that I am cared for and valued.
+          It is in those moments that I smile without effort, and I realize how
+          deeply your presence shapes my happiness.
+        </li>
+        <li>
+          <strong>Pictures:</strong> The photos you gave me don’t just fill my
+          phone—they fill my days with comfort and joy. Each picture is more
+          than just an image; it is a memory of our friendship, a reminder of
+          the times we laughed, shared stories, and simply enjoyed being
+          ourselves. When I look at them, I feel like I am reliving those
+          moments, and it makes me grateful to have someone like you in my life.
+          I want countless more photos in the present and in the future, because
+          they are proof of the bond we share and the happiness you bring. Every
+          snapshot is a treasure, showing me that even when life gets busy or we
+          are apart, your presence remains with me. Your pictures make my world
+          brighter, my thoughts lighter, and my heart calmer. They are not just
+          pixels on a screen—they are pieces of friendship, care, and trust that
+          I will always cherish. Ani please asti ko photo feri forward gara na.
+        </li>
+        <li>
+          <strong>Your Heart:</strong> You cared for me like a second mom,
+          always protecting me and making sure I felt safe, even in moments when
+          I couldn’t protect myself. Your heart has always been full of
+          kindness, patience, and strength, and I’ve seen how much effort you
+          put into looking after me without ever asking for anything in return.
+          Even when you faced your own problems, you carried them quietly, never
+          wanting to burden me. But I wish you’d let me share those moments,
+          because friendship means walking together through both the good and
+          the difficult times. Your heart is the most beautiful gift—it shows me
+          what true care and selflessness look like. Every time you comforted
+          me, encouraged me, or simply stood by me, I felt the depth of your
+          love as a friend. And even in silence, your heart speaks louder than
+          words, reminding me that I am valued, supported, and never alone.
+        </li>
+      </ul>
+      <button onclick="nextPage(4)">Next → Play Game</button>
+    </div>
+
+    <!-- Page 4: Tic Tac Toe -->
+    <div id="page4" class="page">
+      <h2>🎮 Let's Play Game: Tic-Tac-Toe</h2>
+      <div id="board"></div>
+      <p id="status"></p>
+      <button onclick="resetGame()">Restart Game</button>
+    </div>
+
+    <script>
+      function nextPage(n) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById("page" + n).classList.add("active");
+      }
+
+      function showNo() {
+        const response = document.getElementById("response");
+        response.innerHTML = "<div class='emoji'>🥺</div><p>press Yes 💖</p>";
+      }
+
+      function showYes() {
+        const response = document.getElementById("response");
+        response.innerHTML =
+          "<div class='decor'>✨ Dear Subika ✨</div>" +
+          "<p>You are beautiful, stronger than you know, and loved deeply.</p>" +
+          "<p>Whenever life feels heavy, remember you bring light and joy.</p>" +
+          "<p>🐶🐱 With countless smiles always 💕</p>" +
+          "<button onclick='nextPage(3)'>Next → Favorite Things</button>";
+      }
+
+      // Tic Tac Toe Game with Bot
+      let board = ["", "", "", "", "", "", "", "", ""];
+      let currentPlayer = "X";
+      let gameActive = true;
+
+      const boardDiv = document.getElementById("board");
+      const statusDiv = document.getElementById("status");
+
+      function renderBoard() {
+        boardDiv.innerHTML = "";
+        board.forEach((cell, index) => {
+          const cellDiv = document.createElement("div");
+          cellDiv.classList.add("cell");
+          if (cell) cellDiv.classList.add("taken");
+          cellDiv.textContent = cell;
+          cellDiv.addEventListener("click", () => makeMove(index));
+          boardDiv.appendChild(cellDiv);
+        });
+      }
+
+      function makeMove(index) {
+        if (!gameActive || board[index] !== "") return;
+        board[index] = currentPlayer;
+        checkWinner();
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        renderBoard();
+        if (gameActive && currentPlayer === "O") {
+          setTimeout(botMove, 500); // Bot makes a move after 500ms
+        }
+      }
+
+      function botMove() {
+        // Simple bot logic: pick the first empty cell
+        const emptyCells = board
+          .map((cell, index) => (cell === "" ? index : null))
+          .filter((i) => i !== null);
+        if (emptyCells.length > 0) {
+          const randomIndex =
+            emptyCells[Math.floor(Math.random() * emptyCells.length)];
+          board[randomIndex] = "O";
+          checkWinner();
+          currentPlayer = "X";
+          renderBoard();
+        }
+      }
+
+      function checkWinner() {
+        const winPatterns = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+        for (let pattern of winPatterns) {
+          const [a, b, c] = pattern;
+          if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            statusDiv.textContent = "🎉 " + board[a] + " wins! Play again!";
+            gameActive = false;
+            return;
+          }
+        }
+        if (!board.includes("")) {
+          statusDiv.textContent = "😢 It's a draw! Try again!";
+          gameActive = false;
+        }
+      }
+
+      function resetGame() {
+        board = ["", "", "", "", "", "", "", "", ""];
+        currentPlayer = "X";
+        gameActive = true;
+        statusDiv.textContent = "";
+        renderBoard();
+      }
+
+      renderBoard();
+    </script>
+  </body>
+</html>
